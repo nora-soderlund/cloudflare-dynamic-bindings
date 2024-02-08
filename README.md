@@ -9,6 +9,11 @@ This is a package that aims to provide a single solution for managing dynamic bi
 
 It's important to highlight that this action will parse and then stringify your wrangler configuration. It will look a bit different than the original because of how dynamic toml is.
 
+For clarification, the new binding will _not be available until the next deployment_. It is in your control how you want to initiate the next deployment, some scenarios could be for example:
+- Automatically when a commit is pushed to the main branch
+- Automatically open a pull request in the workflow and approve manually
+- Automatically when a deployment workflow has been approved manually
+
 ## Supported bindings
 
 Right now only D1 databases are supported, feel free to adapt the action script to provide more options.
