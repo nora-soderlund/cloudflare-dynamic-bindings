@@ -91,20 +91,25 @@ export default {
     let database = env[`DATABASE_${request.cf.colo}`];
 
     if(!database) {
-      // create a new database for this colo using the Cloudflare API
-      // ...
+      // avoid blocking the response because we won't do anything with the outcome regardless
+      context.waitUntil(new Promise(async (resolve) => {
+        // create a new database for this colo using the Cloudflare API
+        // ...
 
-      // trigger a new binding configuration for the new database
-      await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
-        type: "D1",
-        binding: `DATABASE_${request.cf.colo}`,
-        environments: [
-          {
-            databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192", // use the new database
-            databaseName: "DATABASE_CPH"
-          }
-        ]
-      });
+        // trigger a new binding configuration for the new database
+        await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+          type: "D1",
+          binding: `DATABASE_${request.cf!.colo}`,
+          environments: [
+            {
+              databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192", // use the new database
+              databaseName: "DATABASE_CPH"
+            }
+          ]
+        });
+
+        resolve();
+      }));
 
       // route to a fallback database, because the new binding is not yet available until the next deployment
       database = env.DEFAULT_DATABASE;
