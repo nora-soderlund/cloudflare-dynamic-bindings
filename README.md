@@ -9,7 +9,7 @@ This is a package that aims to provide a single solution for managing dynamic bi
 
 ## Supported bindings
 
-Right now only D1 databases are supported, feel free to adapt the create-dynamic-binding action to provide more options.
+Right now only D1 databases are supported, feel free to adapt the action script to provide more options.
 
 - [X] D1 Databases
 - [ ] KV Namespaces
