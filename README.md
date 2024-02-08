@@ -83,7 +83,7 @@ const repositorySettings: RepositoryProperties = {
 };
 
 export default {
-    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     if(!request.cf) {
       throw new Error("Request is missing `cf` object.");
     }
