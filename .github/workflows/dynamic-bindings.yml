@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Create dynamic bindings
-        uses: ./action/create-dynamic-binding
+        uses: ./
         with:
           file: ./example/wrangler.toml
           bindings: ${{ inputs.bindings }}
