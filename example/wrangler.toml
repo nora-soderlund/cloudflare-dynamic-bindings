@@ -1,6 +1,9 @@
 name = "cloudflare-dynamic-bindings-example"
 main = "src/index.ts"
 compatibility_date = "2024-02-08"
+vars = { }
 
-[vars]
-# ACCOUNT_ID=
+[[d1_databases]]
+binding = "DATABASE_CPH"
+database_name = "DATABASE_CPH"
+database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
