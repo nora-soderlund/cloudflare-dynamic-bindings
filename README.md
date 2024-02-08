@@ -66,7 +66,11 @@ jobs:
 
 ### Setting up your worker
 
-1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g. `pnpm install @nora-soderlund/cloudflare-dynamic-bindings@0.9.3`
+1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g.
+```bash
+npm install @nora-soderlund/cloudflare-dynamic-bindings@0.9.3
+```
+
 2. Create a dynamic binding using the `createWranglerBinding` function, e.g.
 ```ts
 import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindings";
