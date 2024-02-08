@@ -73,16 +73,16 @@ import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindin
 import type { RepositoryProperties } from "@nora-soderlund/cloudflare-dynamic-bindings";
 
 const repositorySettings: RepositoryProperties = {
-	owner: "nora-soderlund",
-	repository: "cloudflare-dynamic-bindings",
-	workflow: "dynamic-bindings.yml" // use the file name you chose for setting up the repository
+  owner: "nora-soderlund",
+  repository: "cloudflare-dynamic-bindings",
+  workflow: "dynamic-bindings.yml" // use the file name you chose for setting up the repository
 };
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		if(!request.cf) {
-			throw new Error("Request is missing `cf` object.");
-		}
+    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    if(!request.cf) {
+      throw new Error("Request is missing `cf` object.");
+    }
 
     let database = env[`DATABASE_${request.cf.colo}`];
 
