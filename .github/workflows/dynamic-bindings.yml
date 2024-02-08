@@ -1,0 +1,29 @@
+name: Dynamic bindings
+
+on:
+  workflow_dispatch:
+    inputs:
+      bindings:
+        required: true
+        description: An JSON array of bindings to add.
+
+jobs:
+  create-dynamic-bindings:
+    name: Create dynamic bindings
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Create dynamic bindings
+        uses: ./.github/actions/create-dynamic-binding
+        with:
+          file: ./example/wrangler.toml
+          bindings: ${{ inputs.bindings }}
+
+      - name: Commit new bindings
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email ''
+          git commit -am "Add dynamic bindings"
+          git push
