@@ -3,7 +3,7 @@ This is a package that aims to provide a single solution for managing dynamic bi
 
 ## How does it work?
 
-1. Worker creates a new D1 database via the Cloudflare API.
+1. (Optional) Worker creates a new D1 database via the Cloudflare API.
 2. Worker triggers a GitHub workflow to add the new binding.
 3. GitHub Actions modifies wrangler.toml and triggers a new deployment.
 
@@ -64,7 +64,7 @@ jobs:
 
 ### Setting up your worker
 
-1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g. `pnpm install @nora-soderlund/cloudflare-dynamic-bindings`
+1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g. `pnpm install @nora-soderlund/cloudflare-dynamic-bindings@0.9.3`
 2. Create a dynamic binding using the `createWranglerBinding` function, e.g.
 ```ts
 import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindings";
