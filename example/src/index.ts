@@ -80,6 +80,18 @@ export default {
 
 			return new Response(`Database ${binding} was created and wrangler update was triggered.`);
 		}
+		else {
+			await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+				type: "D1",
+				binding: "DATABASE_CPH",
+				environments: [
+					{
+						databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192",
+						databaseName: "DATABASE_CPH"
+					}
+				]
+			});
+		}
 
 		return new Response("Path not found, please check the README.md in the `example` folder.");
 	},

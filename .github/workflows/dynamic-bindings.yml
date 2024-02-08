@@ -7,6 +7,9 @@ on:
         required: true
         description: An JSON array of bindings to add.
 
+permissions:
+  contents: write
+
 jobs:
   create-dynamic-bindings:
     name: Create dynamic bindings
