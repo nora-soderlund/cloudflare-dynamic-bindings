@@ -7,15 +7,9 @@
       "noImplicitAny": true,
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "build",
-      "baseUrl": ".",
-      "types": ["@types/node"],
-      "paths": {
-          "*": [
-              "node_modules/*",
-              "src/types/*"
-          ]
-      }
+      "outDir": "./build",
+      "rootDir": "./src",
+      "types": ["@types/node"]
   },
   "include": [
       "src/**/*"

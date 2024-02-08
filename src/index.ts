@@ -36,12 +36,13 @@ export type WranglerBinding = {
  * 
  * @throws Throws an Error if the workflow dispatch failed.
  */
-export async function createWranglerBinding({ owner, repository, workflow, ref }: RepositoryProperties, token: string, bindings: WranglerBinding | WranglerBinding[]) {
+export async function createWranglerBinding({ owner, repository, workflow, ref = "main" }: RepositoryProperties, token: string, bindings: WranglerBinding | WranglerBinding[]) {
   const response = await fetch(`https://api.github.com/repos/${owner}/${repository}/actions/workflows/${workflow}/dispatches`, {
     method: "POST",
     headers: {
       "Accept": "application/vnd.github+json",
       "Authorization": `Bearer ${token}`,
+      "User-Agent": "cloudflare-dynamic-bindings",
       "X-GitHub-Api-Version": "2022-11-28"
     },
     body: JSON.stringify({

@@ -1,9 +1,8 @@
 import { parse, stringify } from "@iarna/toml";
 import { getInput, setFailed } from "@actions/core";
-import type { WranglerBinding } from "../../../../src";
 import { writeFileSync } from "fs";
 
-const bindings: WranglerBinding[] = JSON.parse(
+const bindings = JSON.parse(
   getInput("bindings", {
     required: true,
     trimWhitespace: true
@@ -26,7 +25,7 @@ for(let binding of bindings) {
         if(!wrangler[`env.${environment.environment}`]) {
           wrangler[`env.${environment.environment}`] = [];
         }
-        
+
         d1Databases = wrangler[`env.${environment.environment}`];
       }
       else {
