@@ -106,6 +106,7 @@ export default {
         ]
       });
 
+      // route to a fallback database, because the new binding is not yet available until the next deployment
       database = env.DEFAULT_DATABASE;
     }
 
