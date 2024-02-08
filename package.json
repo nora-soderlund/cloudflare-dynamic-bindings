@@ -1,13 +1,13 @@
 {
-  "name": "cloudflare-dynamic-bindings",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@nora-soderlund/cloudflare-dynamic-bindings",
+  "version": "0.9.1",
+  "description": "A package that aims to provide a single solution for managing dynamic binds for Cloudflare Workers.",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nora Söderlund",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^5.3.3"

@@ -1,5 +1,5 @@
-import { createWranglerBinding } from "../../src";
-import type { RepositoryProperties } from "../../src";
+import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindings";
+import type { RepositoryProperties } from "@nora-soderlund/cloudflare-dynamic-bindings";
 
 const repositorySettings: RepositoryProperties = {
 	owner: "nora-soderlund",

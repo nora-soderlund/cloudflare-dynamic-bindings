@@ -11,5 +11,8 @@
     "@cloudflare/workers-types": "^4.20240129.0",
     "typescript": "^5.0.4",
     "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "@nora-soderlund/cloudflare-dynamic-bindings": "^0.9.1"
   }
 }
