@@ -83,17 +83,17 @@ export default {
 		else {
 			await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
 				type: "D1",
-				binding: "DATABASE_MEL",
+				binding: "DATABASE_CPH",
 				environments: [
 					{
 						environment: "staging",
 						databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192",
-						databaseName: "DATABASE_MEL_STAGING"
+						databaseName: "DATABASE_CPH_STAGING"
 					},
 					{
 						environment: "production",
 						databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192",
-						databaseName: "DATABASE_MEL_PROD"
+						databaseName: "DATABASE_CPH_PROD"
 					}
 				]
 			});
