@@ -49,7 +49,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Create dynamic bindings
-        uses: ./.github/actions/create-dynamic-binding
+        uses: nora-soderlund/cloudflare-dynamic-bindings@0.9.2
         with:
           file: ./wrangler.toml # change the path to your wrangler.toml file or just omit this line
           bindings: ${{ inputs.bindings }}

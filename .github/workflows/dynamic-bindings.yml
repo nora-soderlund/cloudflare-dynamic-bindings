@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Create dynamic bindings
-        uses: nora-soderlund/cloudflare-dynamic-bindings@0.9.2
+        uses: ./.github/actions/create-dynamic-binding
         with:
           file: ./example/wrangler.toml
           bindings: ${{ inputs.bindings }}

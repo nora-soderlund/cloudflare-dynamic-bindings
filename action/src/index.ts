@@ -20,6 +20,8 @@ const wrangler = parse(
   })
 );
 
+console.log(JSON.stringify(wrangler, undefined, 2));
+
 for(let binding of bindings) {
   if(binding.type === "D1") {
     for(let environment of binding.environments) {
