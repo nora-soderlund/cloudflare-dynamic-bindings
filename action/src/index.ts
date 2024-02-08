@@ -29,10 +29,14 @@ for(let binding of bindings) {
 
       if(environment.environment) {
         if(!wrangler[`env.${environment.environment}`]) {
-          wrangler[`env.${environment.environment}`] = [];
+          wrangler[`env.${environment.environment}`] = {};
         }
 
-        d1Databases = wrangler[`env.${environment.environment}`];
+        if(!(wrangler[`env.${environment.environment}`] as any).d1_databases) {
+          (wrangler[`env.${environment.environment}`] as any).d1_databases = [];
+        }
+
+        d1Databases = (wrangler[`env.${environment.environment}`] as any).d1_databases;
       }
       else {
         if(!wrangler["d1_databases"]) {
