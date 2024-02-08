@@ -78,16 +78,36 @@ const repositorySettings: RepositoryProperties = {
 	workflow: "dynamic-bindings.yml" // use the file name you chose for setting up the repository
 };
 
-await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
-  type: "D1",
-  binding: "DATABASE_CPH",
-  environments: [
-    {
-      databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192",
-      databaseName: "DATABASE_CPH"
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		if(!request.cf) {
+			throw new Error("Request is missing `cf` object.");
+		}
+
+    let database = env[`DATABASE_${request.cf.colo}`];
+
+    if(!database) {
+      // create a new database for this colo using the Cloudflare API
+      // ...
+
+      // trigger a new binding configuration for the new database
+      await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+        type: "D1",
+        binding: `DATABASE_${request.cf.colo}`,
+        environments: [
+          {
+            databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192", // use the new database
+            databaseName: "DATABASE_CPH"
+          }
+        ]
+      });
+
+      database = env.DEFAULT_DATABASE;
     }
-  ]
-});
+
+    // ...
+  }
+}
 ```
 
 ### Outcome
