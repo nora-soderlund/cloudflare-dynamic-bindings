@@ -7,6 +7,8 @@ This is a package that aims to provide a single solution for managing dynamic bi
 2. Worker triggers a GitHub workflow to add the new binding.
 3. GitHub Actions modifies wrangler.toml and triggers a new deployment.
 
+It's important to highlight that this action will parse and then stringify your wrangler configuration. It will look a bit different than the original because of how dynamic toml is.
+
 ## Supported bindings
 
 Right now only D1 databases are supported, feel free to adapt the action script to provide more options.
