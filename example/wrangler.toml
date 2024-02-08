@@ -8,21 +8,6 @@ binding = "DATABASE_CPH"
 database_name = "DATABASE_CPH"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
 
-[[d1_databases]]
-binding = "DATABASE_CPH"
-database_name = "DATABASE_CPH"
-database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
-
-[[d1_databases]]
-binding = "DATABASE_CPH"
-database_name = "DATABASE_CPH"
-database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
-
-[[d1_databases]]
-binding = "DATABASE_MEL"
-database_name = "DATABASE_MEL"
-database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
-
 [[env.production.d1_databases]]
 binding = "DATABASE_CPH"
 database_name = "DATABASE_CPH"
@@ -39,11 +24,6 @@ database_name = "DATABASE_MEL_STAGING"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
 
 [["env.production".d1_databases]]
-binding = "DATABASE_MEL"
-database_name = "DATABASE_MEL_PROD"
-database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
-
-[["env.prod_new".d1_databases]]
 binding = "DATABASE_MEL"
 database_name = "DATABASE_MEL_PROD"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"

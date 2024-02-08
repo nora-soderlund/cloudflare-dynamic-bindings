@@ -20,19 +20,22 @@ for (let binding of bindings) {
         for (let environment of binding.environments) {
             let d1Databases;
             if (environment.environment) {
-                if (!wrangler[`env.${environment.environment}`]) {
-                    wrangler[`env.${environment.environment}`] = {};
+                if (!wrangler.env) {
+                    wrangler.env = {};
                 }
-                if (!wrangler[`env.${environment.environment}`].d1_databases) {
-                    wrangler[`env.${environment.environment}`].d1_databases = [];
+                if (!wrangler.env[environment.environment]) {
+                    wrangler.env[environment.environment] = {};
                 }
-                d1Databases = wrangler[`env.${environment.environment}`].d1_databases;
+                if (!wrangler.env[environment.environment].d1_databases) {
+                    wrangler.env[environment.environment].d1_databases = [];
+                }
+                d1Databases = wrangler.env[environment.environment].d1_databases;
             }
             else {
-                if (!wrangler["d1_databases"]) {
-                    wrangler["d1_databases"] = [];
+                if (!wrangler.d1_databases) {
+                    wrangler.d1_databases = [];
                 }
-                d1Databases = wrangler["d1_databases"];
+                d1Databases = wrangler.d1_databases;
             }
             if (Array.isArray(d1Databases)) {
                 d1Databases.push({
