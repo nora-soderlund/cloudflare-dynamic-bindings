@@ -62,6 +62,8 @@ jobs:
           git push
 ```
 
+### Setting up your worker
+
 1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g. `pnpm install @nora-soderlund/cloudflare-dynamic-bindings`
 2. Create a dynamic binding using the `createWranglerBinding` function, e.g.
 ```ts
