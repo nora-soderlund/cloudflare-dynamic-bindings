@@ -1,0 +1,15 @@
+name: Create dynamic binding
+description: Adds a binding to the wrangler.toml file on demand
+
+inputs:
+  file:
+    default: ./wrangler.toml
+    description: The path to the wrangler.toml file, defaults to './wrangler.toml'.
+
+  bindings:
+    required: true
+    description: An JSON array of bindings to add.
+  
+runs:
+  using: 'node20'
+  main: 'action/build/index.js'
