@@ -12,3 +12,8 @@ database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
 binding = "DATABASE_CPH"
 database_name = "DATABASE_CPH"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
+
+[[d1_databases]]
+binding = "DATABASE_CPH"
+database_name = "DATABASE_CPH"
+database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
