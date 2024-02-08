@@ -1,6 +1,6 @@
 import { parse, stringify } from "@iarna/toml";
 import { getInput, setFailed } from "@actions/core";
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 const bindings = JSON.parse(
   getInput("bindings", {
@@ -14,7 +14,11 @@ const file = getInput("file", {
   trimWhitespace: true
 });
 
-const wrangler = parse(file);
+const wrangler = parse(
+  readFileSync(file, {
+    encoding: "utf-8"
+  })
+);
 
 for(let binding of bindings) {
   if(binding.type === "D1") {

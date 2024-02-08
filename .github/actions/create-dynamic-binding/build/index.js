@@ -11,7 +11,9 @@ const file = (0, core_1.getInput)("file", {
     required: true,
     trimWhitespace: true
 });
-const wrangler = (0, toml_1.parse)(file);
+const wrangler = (0, toml_1.parse)((0, fs_1.readFileSync)(file, {
+    encoding: "utf-8"
+}));
 for (let binding of bindings) {
     if (binding.type === "D1") {
         for (let environment of binding.environments) {
