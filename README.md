@@ -73,7 +73,7 @@ jobs:
 
 1. Install the `@nora-soderlund/cloudflare-dynamic-bindings` package, e.g.
 ```bash
-npm install @nora-soderlund/cloudflare-dynamic-bindings@0.9.3
+npm install @nora-soderlund/cloudflare-dynamic-bindings
 ```
 
 2. Create a dynamic binding using the `createWranglerBinding` function, e.g.
