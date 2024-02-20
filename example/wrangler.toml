@@ -33,9 +33,19 @@ binding = "DATABASE_CPH"
 database_name = "DATABASE_CPH_STAGING"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
 
+[[env.staging.d1_databases]]
+binding = "DATABASE_CPH"
+database_name = "DATABASE_CPH_STAGING"
+database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
+
 [[env.production.d1_databases]]
 binding = "DATABASE_MEL"
 database_name = "DATABASE_MEL_PROD"
+database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
+
+[[env.production.d1_databases]]
+binding = "DATABASE_CPH"
+database_name = "DATABASE_CPH_PROD"
 database_id = "e4ccd0df-f2ca-4d06-ab56-67d8d0373192"
 
 [[env.production.d1_databases]]
