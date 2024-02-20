@@ -78,7 +78,7 @@ npm install @nora-soderlund/cloudflare-dynamic-bindings@0.9.3
 
 2. Create a dynamic binding using the `createWranglerBinding` function, e.g.
 ```ts
-import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindings";
+import { createD1Database, createWranglerBinding, getD1DatabaseBinding, getD1DatabaseIdentifier } from "@nora-soderlund/cloudflare-dynamic-bindings";
 import type { RepositoryProperties } from "@nora-soderlund/cloudflare-dynamic-bindings";
 
 const repositorySettings: RepositoryProperties = {
@@ -93,33 +93,39 @@ export default {
       throw new Error("Request is missing `cf` object.");
     }
 
-    let database = env[`DATABASE_${request.cf.colo}`];
+    const binding = `DATABASE_${request.cf.colo}`;
+    const databaseName = `DATABASE_${request.cf.colo}`;
+
+    let database = env[binding];
 
     if(!database) {
-      // avoid blocking the response because we won't do anything with the outcome regardless
-      context.waitUntil(new Promise(async (resolve) => {
-        // create a new database for this colo using the Cloudflare API
-        // ...
+			// Check if the database already exists but just isn't bound
+			let databaseId = await getD1DatabaseIdentifier(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
 
-        // trigger a new binding configuration for the new database
-        await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
-          type: "D1",
-          binding: `DATABASE_${request.cf!.colo}`,
-          environments: [
-            {
-              databaseId: "e4ccd0df-f2ca-4d06-ab56-67d8d0373192", // use the new database
-              databaseName: "DATABASE_CPH"
-            }
-          ]
-        });
+			if(!databaseId) {
+				// Create a new database otherwise using the Cloudflare API
+				databaseId = await createD1Database(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
+				
+				// Dispatch a binding update but don't block the response
+				context.waitUntil(createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+					type: "D1",
+					binding,
+					environments: [
+						{
+							databaseId,
+							databaseName
+						}
+					]
+				}));
+			}
 
-        resolve();
-      }));
-
-      // route to a fallback database, because the new binding is not yet available until the next deployment
-      database = env.DEFAULT_DATABASE;
+			// Create a D1Database polyfill instance that uses the HTTP API as a fallback
+			database = getD1DatabaseBinding(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseId);
     }
 
+    // Example query on the bound or non-bound database
+    const sum = await database.prepare("SELECT ? + ? AS sum").bind(50, 50).first<number>("sum");
+    
     // ...
   }
 }

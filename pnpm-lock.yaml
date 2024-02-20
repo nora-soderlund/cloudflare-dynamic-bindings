@@ -5,11 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@cloudflare/workers-types':
+    specifier: ^4.20240208.0
+    version: 4.20240208.0
   typescript:
     specifier: ^5.3.3
     version: 5.3.3
 
 packages:
+
+  /@cloudflare/workers-types@4.20240208.0:
+    resolution: {integrity: sha512-MVGTTjZpJu4kJONvai5SdJzWIhOJbuweVZ3goI7FNyG+JdoQH41OoB+nMhLsX626vPLZVWGPIWsiSo/WZHzgQw==}
+    dev: true
 
   /typescript@5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}

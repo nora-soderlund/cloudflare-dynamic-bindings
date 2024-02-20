@@ -1,5 +1,5 @@
-import { createWranglerBinding } from "@nora-soderlund/cloudflare-dynamic-bindings";
-import type { RepositoryProperties } from "@nora-soderlund/cloudflare-dynamic-bindings";
+import { createD1Database, createWranglerBinding, getD1DatabaseBinding, getD1DatabaseIdentifier } from "../../src/index";
+import type { RepositoryProperties } from "../../src/index";
 
 const repositorySettings: RepositoryProperties = {
 	owner: "nora-soderlund",
@@ -19,7 +19,7 @@ export type Env = {
 } & Record<string, D1Database>;
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request: Request, env: Env, context: ExecutionContext): Promise<Response> {
 		if(!request.cf) {
 			throw new Error("Request is missing `cf` object.");
 		}
@@ -28,57 +28,42 @@ export default {
 
 		if(url.pathname.toLowerCase() === "/d1-database") {
 			const binding = `DATABASE_${request.cf.colo}`;
+			const databaseName = `DATABASE_${request.cf.colo}`;
+
+			let database = env[binding];
 
 			// Check if there's an existing database for the current colo
-			if(env[binding]) {
-				return new Response(`Database and binding already exists for ${binding} already exists.`);
+			if(database) {
+				return new Response(`Database and binding already exists for ${databaseName} already exists.`);
 			}
 
-			// Create a new database otherwise using the Cloudflare API
-			const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/d1/database`, {
-				method: "POST",
-				headers: {
-					"Authorization": `Bearer ${env.CLOUDFLARE_TOKEN}`,
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					name: binding
-				})
-			});
+			// Check if the database already exists but just isn't bound
+			let databaseId = await getD1DatabaseIdentifier(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
 
-			if(!response.ok) {
-				throw new Error("Failed to create D1 database: " + await response.text());
-			}
-
-			const { result } = await response.json<any>();
-
-			try {
-				// Trigger a wrangler binding update
-				await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+			if(!databaseId) {
+				// Create a new database otherwise using the Cloudflare API
+				databaseId = await createD1Database(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
+				
+				// Dispatch a binding update but don't block the response
+				context.waitUntil(createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
 					type: "D1",
 					binding,
 					environments: [
 						{
-							databaseId: result.uuid,
-							databaseName: result.name
+							databaseId,
+							databaseName
 						}
 					]
-				});
-			}
-			catch(error) {
-				// For the sake of testability in this example, let's destroy the database if we couldn't trigger a workflow dispatch
-				await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/d1/database/${result.uuid}`, {
-					method: "DELETE",
-					headers: {
-						"Authorization": `Bearer ${env.CLOUDFLARE_TOKEN}`,
-						"Content-Type": "application/json"
-					}
-				});
-
-				throw error;
+				}));
 			}
 
-			return new Response(`Database ${binding} was created and wrangler update was triggered.`);
+			// Create a D1Database polyfill instance that uses the HTTP API as a fallback
+			database = getD1DatabaseBinding(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseId);
+
+			// Example query on the non-bound database
+			const sum = await database.prepare("SELECT ? + ? AS sum").bind(50, 50).first<number>("sum");
+
+			return new Response(`Database ${binding} was created and wrangler update was triggered and query for sum resolved into ${sum}`);
 		}
 		else {
 			await createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
