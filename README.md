@@ -99,33 +99,33 @@ export default {
     let database = env[binding];
 
     if(!database) {
-			// Check if the database already exists but just isn't bound
-			let databaseId = await getD1DatabaseIdentifier(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
+      // Check if the database already exists but just isn't bound
+      let databaseId = await getD1DatabaseIdentifier(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
 
-			if(!databaseId) {
-				// Create a new database otherwise using the Cloudflare API
-				databaseId = await createD1Database(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
-				
-				// Dispatch a binding update but don't block the response
-				context.waitUntil(createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
-					type: "D1",
-					binding,
-					environments: [
-						{
-							databaseId,
-							databaseName
-						}
-					]
-				}));
-			}
+      if(!databaseId) {
+        // Create a new database otherwise using the Cloudflare API
+        databaseId = await createD1Database(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseName);
+        
+        // Dispatch a binding update but don't block the response
+        context.waitUntil(createWranglerBinding(repositorySettings, env.GITHUB_TOKEN, {
+          type: "D1",
+          binding,
+          environments: [
+            {
+              databaseId,
+              databaseName
+            }
+          ]
+        }));
+      }
 
-			// Create a D1Database polyfill instance that uses the HTTP API as a fallback
-			database = getD1DatabaseBinding(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseId);
+      // Create a D1Database polyfill instance that uses the HTTP API as a fallback
+      database = getD1DatabaseBinding(env.CLOUDFLARE_TOKEN, env.ACCOUNT_ID, databaseId);
     }
 
     // Example query on the bound or non-bound database
     const sum = await database.prepare("SELECT ? + ? AS sum").bind(50, 50).first<number>("sum");
-    
+
     // ...
   }
 }
